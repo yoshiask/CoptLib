@@ -1,37 +1,50 @@
-## Welcome to GitHub Pages
+# What is CoptLib?
 
-You can use the [editor on GitHub](https://github.com/yoshiask/CoptLib/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+CoptLib (shortened from "Coptic Library") is a .NET Standard library developed in C# designed to help developers handle scenarios specific to the Coptic language and culture.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Using CoptLib
+If your app supports .NET Standard 1.4, then you can [install the package from NuGet](https://www.nuget.org/packages/CoptLib) by pasting the command below into the Package Manager Console.
+  PM> Install-Package CoptLib
 
-### Markdown
+| .NET Core | .NET Framework | Mono | Xamarin.iOS | Xamarin.Mac | Xamarin.Android | UWP    | Unity  | Windows 8/8.1/Phone |
+|-----------|----------------|------|-------------|-------------|-----------------|--------|--------|---------------------|
+| 1.0       | 4.6.1          | 4.6  | 10.0        | 3.0         | 7.0             | 10.0.0 | 2018.1 | Not Available       |
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+# Features
+## Coptic Dates
 
-```markdown
-Syntax highlighted code block
+The ```CopticDate``` class is a crude version of .NET's  ```DateTime``` class. The most important features provided by this class are the date calculation functions and the static properties for common Coptic events.
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+### DateTime to CopticDate
+```csharp
+DateTime gDate = DateTime.Today; // Any DateTime (using the Gregorian calendar) will work here
+CopticDate cDate1 = new CopticDate(gDate);
+CopticDate cDate2 = CopticDate.ToCopticDate(gDate);
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### CopticDate to DateTime
+```csharp
+CopticDate cDate = CopticDate.Today; // Any CopticDate created from a DateTime object will work here
+DateTime gDate = cDate.ToGregorianDate();
+```
 
-### Jekyll Themes
+### More Date-related features
+For more features available in the CopticDate class, see [Dates](https://www.github.com/yoshiask/CoptLib/master/Dates).
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/yoshiask/CoptLib/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## Text Conversions (CopticInterpreter)
 
-### Support or Contact
+The ```CopticInterpreter``` is a static class that contains various functions for converting Coptic text to various formats. Along with functions to do the conversions automatically, there are also key mappings available via the "Alphabet" Dictionaries.
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+```csharp
+// Coptic-Phonetic is a custom format written to be safely saved into text files (Including XML and JSON)
+// Coptic1 is a common Coptic font. Used by Coptic Chanter.
+string Coptic1 = CopticInterpreter.ConvertFromString(CopticPhonetic);
+string CopticPhonetic = CopticInterpreter.ConvertToString(Coptic1);
+
+// Tabeha.org is a popular online library containing many Coptic hymns and such. It uses the CS Avva Shenouda font.
+string Coptic1 = CopticInterpreter.ConvertFromTasbeha(Tasbeha);
+
+string Coptic1 = CopticInterprester.ConvertFromCopticUnicode(CopticUnicodeText);
+```
+
+## More information coming soon!
